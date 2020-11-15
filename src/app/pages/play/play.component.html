@@ -1,0 +1,37 @@
+<div class="round">Round = {{gameRound}} : Points: T1 - {{_team1_points}}  /  T2 - {{_team2_points}}</div>
+<div class="trump">trump: <b><img src="{{trump.icon}}" > {{trump.name}}</b></div>
+<br>
+
+<div class="table">
+    <div class="card-wrap">
+        <span *ngFor="let _tcard of tableCards" class="card"
+            style="background-image: url({{cardImageBbasePath}}); width: {{_tcard.card.imgWidth}}px; height: {{_tcard.card.imgHeight}}px; background-position: -{{_tcard.card.imgX}}px -{{_tcard.card.imgY}}px; background-size: {{_tcard.card.scaleX}}px {{_tcard.card.scaleY}}px"
+            [style.transform]="'rotate('+getRandRotation()+'deg)'"
+        >
+        </span>
+    </div>
+</div>
+<b *ngIf="winnersOftheTurn != undefined">Turn win team : Team {{winnersOftheTurn}}</b>
+<br>
+<b *ngIf="winnerOveral != undefined">Winner overall : {{winnerOveral}}</b>
+
+<div *ngIf="error">
+    {{error}}
+</div>
+
+<br><br>
+
+<div *ngFor="let player of team_players; let j = index" class="player{{player.id + 1}} team{{player.team + 1}} count-{{player.cards.length}}">
+    <p>{{player.name}} (Team {{player.team + 1}}) - {{j}}:</p>
+    <div *ngIf="player !== me">
+        <span class="card card-{{i+1}}" *ngFor="let card of player.cards; let i = index"
+            style="background-image: url({{cardImageBbasePath}}); width: {{card.imgWidth}}px; height: {{card.imgHeight}}px; background-position: 0 0; background-size: {{card.scaleX}}px {{card.scaleY}}px">
+        </span>
+    </div>
+    <div *ngIf="player === me">
+        <span class="card card-{{i+1}}" *ngFor="let card of me.cards; let i = index" (click)="put(i, card)" 
+            style="background-image: url({{cardImageBbasePath}}); width: {{card.imgWidth}}px; height: {{card.imgHeight}}px; background-position: -{{card.imgX}}px -{{card.imgY}}px; background-size: {{card.scaleX}}px {{card.scaleY}}px" >
+        </span>
+    </div>
+</div>
+<br><br>
